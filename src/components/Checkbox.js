@@ -6,7 +6,7 @@ export default function Checkbox(props){
       id={props.id} 
       name={props.id}
       checked={props.formData[props.id]}
-      onChange={()=>props.addProduct(props.id)}
+      onChange={(event)=>props.addProduct(event.target)}
     />
     <label htmlFor={props.id}>{props.label}</label>
   </div>

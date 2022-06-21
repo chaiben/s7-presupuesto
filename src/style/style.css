@@ -1,1 +1,10 @@
+div{
+  padding: 0.5rem 0;
+}
 
+.panel{
+  border: 2px solid black;
+  border-radius: 1rem;
+  padding: 1rem;
+  max-width: 300px;
+}
