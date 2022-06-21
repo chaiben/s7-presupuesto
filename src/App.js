@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react'
+import Form from './components/Form'
 
-function App() {
+export default function App() {
+  const [formData, setFormData] = useState(
+    {
+      paginaWeb: false,
+      campaniaSeo: false,
+      campaniaAds: false
+    }
+  )
+
+  const totalPrice = 
+      (formData.paginaWeb ? 500 : 0) +
+      (formData.campaniaSeo ? 300 : 0) +
+      (formData.campaniaAds ? 200 : 0);
+
+  function addProduct(id){
+    setFormData(preFormData => ({
+      ...preFormData,
+      [id]: !preFormData[id]
+    })
+    )
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <div>¿Qué quieres hacer?</div>
+      <Form formData={formData} addProduct={addProduct} />
+      <div>Total: {totalPrice} €</div>
     </div>
-  );
-}
-
-export default App;
+  )
+};
