@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Fragment } from 'react'
 import Form from './components/Form'
 import "./style/style.css"
 
@@ -53,10 +53,10 @@ export default function App() {
   }
 
   return (
-    <div>
-      <div>¿Qué quieres hacer?</div>
+    <Fragment>
+      <h1>¿Qué quieres hacer?</h1>
       <Form formData={formData} addProduct={addProduct} />
       <div>Total: {totalPrice} €</div>
-    </div>
+    </Fragment>
   )
 };
