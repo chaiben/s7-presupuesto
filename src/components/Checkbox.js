@@ -1,6 +1,6 @@
 export default function Checkbox(props){
   return (
-  <div>
+  <div className="checkboxElement">
       <input 
       type="checkbox" 
       id={props.id} 
