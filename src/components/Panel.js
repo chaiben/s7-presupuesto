@@ -1,23 +1,22 @@
+import Quantity from "./Quantity";
+
 export default function Panel(props) {
   return (
     <div className="panel">
-      Número de páginas: 
-      <input
-        type="text"
-        onChange={(event) => props.addProduct(event.target)}
+      <div>
+        Número de páginas: 
+        <Quantity 
         id="numPages"
-        name="numPages"
-        value={props.formData["numPages"]}
-      />
+        formData = {props.formData}
+        addProduct = {props.addProduct}
+        />
+      </div>
       Número de idiomas: 
-      <input
-        type="text"
+        <Quantity
         id="numLanguages"
-        onChange={(event) => props.addProduct(event.target)}
-        name="numLanguages"
-        value={props.formData["numLanguages"]}
-      />
-
+        formData = {props.formData}
+        addProduct = {props.addProduct}
+        />
     </div>
   );
 }

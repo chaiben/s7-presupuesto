@@ -13,7 +13,7 @@ export default function App() {
     }
   )
 
-  let totalPrice = 
+  const totalPrice = 
       (formData.paginaWeb ? 
         500 + formData.numLanguages * formData.numPages * 30 : 
         0
@@ -23,6 +23,16 @@ export default function App() {
 
   function addProduct(data){
     const {type, name, value} = data;
+
+    if(
+      type !== "checkbox" && 
+      value && 
+      !value.toString().match(/^[0-9 ]+$/)
+      )
+      return;
+    
+    if(parseInt(value) < 0)
+      return;
 
     setFormData(preFormData => ({
       ...preFormData,
