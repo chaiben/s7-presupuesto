@@ -1,17 +1,28 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Form from './components/Form'
 import "./style/style.css"
 
 export default function App() {
-  const [formData, setFormData] = useState(
-    {
+  const [formData, setFormData] = useState(() => {
+    const initialValue = {
       paginaWeb: false,
       campaniaSeo: false,
       campaniaAds: false,
       numPages: 1,
       numLanguages: 1
     }
-  )
+
+    try {
+      const item = localStorage.getItem("formData");
+      return item ? JSON.parse(item) : initialValue;
+    } catch (error) {
+      return initialValue;
+    }
+  })
+
+  useEffect(()=>{
+    localStorage.setItem("formData", JSON.stringify(formData));
+  }, [formData])
 
   const totalPrice = 
       (formData.paginaWeb ? 
