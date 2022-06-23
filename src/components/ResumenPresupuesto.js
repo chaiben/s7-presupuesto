@@ -2,7 +2,7 @@ export default function ResumenPresupuesto(props){
   return(
     <div 
     key={`resumen${props.id}`} 
-    className={`resumen ${props.index === props.selectedBudget ? "selected" : ""}`}
+    className={`resumen ${props.data.selected ? "selected" : ""}`}
     onClick={props.loadBudget}
     >
       <div><span>Nombre:</span> {props.data.presupuesto}</div>

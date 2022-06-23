@@ -14,23 +14,6 @@ export default function App(){
       return initialValue;
     }
   })
-  useEffect(()=>{
-    localStorage.setItem("lista", JSON.stringify(lista));
-  }, [lista])
-  
-  const [selectedBudget, setSelectedBudget] = useState(() => {
-    const initialValue = 0
-
-    try {
-      const item = localStorage.getItem("selectedBudget");
-      return item ? JSON.parse(item) : initialValue;
-    } catch (error) {
-      return initialValue;
-    }
-  })
-  useEffect(()=>{
-    localStorage.setItem("selectedBudget", JSON.stringify(selectedBudget));
-  }, [selectedBudget])
 
   const [formData, setFormData] = useState(() => {
     const initialValue = {
@@ -51,9 +34,16 @@ export default function App(){
     }
   })
 
-  useEffect(()=>{
-    localStorage.setItem("formData", JSON.stringify(formData));
-  }, [formData])
+  const [sortType, setSortType] = useState(() => {
+    const initialValue = "sortDateNew";
+
+    try {
+      const item = localStorage.getItem("sortType");
+      return item ? JSON.parse(item) : initialValue;
+    } catch (error) {
+      return initialValue;
+    }
+  })
 
   function addProduct(data){
     const {type, name, value} = data;
@@ -76,16 +66,28 @@ export default function App(){
   }
 
   function saveBudget(data){
-    setLista(preLista => [
-     {...data, 
-      date: new Date().toUTCString()
-     },
-     ...preLista
-    ])
-    setSelectedBudget(0);
+    setLista(preLista => {
+      const oldValues = preLista.map(values => {
+        return {
+          ...values,
+          selected: false
+        }
+      });
+
+      return [
+        {
+          ...data, 
+          date: new Date().toUTCString(),
+          selected: true
+        },
+        ...oldValues
+      ]
+    })
+    sort(sortType);
   }
 
   function loadBudget(index){
+    
     setFormData(() => ({
       paginaWeb: lista[index].paginaWeb ,
       campaignSeo: lista[index].campaignSeo ,
@@ -94,14 +96,113 @@ export default function App(){
       numLanguages: lista[index].numLanguages ,
       presupuesto: lista[index].presupuesto ,
       cliente: lista[index].cliente 
-    }))
-    setSelectedBudget(index);
+    }));
+
+    setLista(prevLista => (
+      prevLista.map((values,i) => ({
+        ...values,
+        selected: index === i ? true : false
+      }))
+    ))
   }
+  function sort(type){
+    setSortType(type);
+    switch (type) {
+      case "sortAZ":
+        sortAZ();
+        break;
+      case "sortZA":
+        sortZA();
+        break;
+      case "sortDateNew":
+        sortDateNew();
+        break;
+      case "sortDateOld":
+        sortDateOld();
+        break;
+    
+      default:
+        sortDateNew();
+        break;
+    }
+  }
+  function sortAZ(){
+    setLista(preLista => {
+      const newArray = [...preLista];
+      newArray.sort(function(a,b){
+        if(a.presupuesto > b.presupuesto)
+          return 1;
+          else
+          return -1;
+      })
+      return newArray;
+    }
+    );
+  }
+  function sortZA(){
+    setLista(preLista => {
+      const newArray = [...preLista];
+      newArray.sort(function(a,b){
+        if(a.presupuesto < b.presupuesto)
+          return 1;
+          else
+          return -1;
+      })
+      return newArray;
+    }
+    );
+  }
+  function sortDateNew(){
+    setLista(preLista => {
+      const newArray = [...preLista];
+      newArray.sort(function(a,b){
+        if(a.date < b.date)
+          return 1;
+          else
+          return -1;
+      })
+      return newArray;
+    }
+    );
+  }
+  function sortDateOld(){
+    setLista(preLista => {
+      const newArray = [...preLista];
+      newArray.sort(function(a,b){
+        if(a.date > b.date)
+          return 1;
+          else
+          return -1;
+      })
+      return newArray;
+    }
+    );
+  }
+  useEffect(()=>{
+    localStorage.setItem("lista", JSON.stringify(sortType));
+    localStorage.setItem("lista", JSON.stringify(lista));
+    localStorage.setItem("formData", JSON.stringify(formData));
+  }, [sortType, lista, formData]);
 
   return (
     <div className="flex">
-      <section><Presupuesto formData={formData} addProduct={addProduct} saveBudget={saveBudget} /></section>
-      {lista.length > 0 && <aside><ListaPresupuestos lista={lista} loadBudget={loadBudget} selectedBudget={selectedBudget} /></aside>}
+      <section>
+        <Presupuesto 
+        formData={formData} 
+        addProduct={addProduct} 
+        saveBudget={saveBudget} />
+      </section>
+      {lista.length > 0 && 
+        <aside>
+          <ListaPresupuestos 
+          lista={lista} 
+          loadBudget={loadBudget}
+          setLista={setLista}
+          sortType={sortType}
+          sort={sort}
+          />
+        </aside>
+      }
     </div>
   )
 }

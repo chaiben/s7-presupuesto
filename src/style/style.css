@@ -24,6 +24,12 @@ aside {
   justify-content: flex-start;
   padding: 1rem 1.5rem;
 }
+.resumenLista{
+  padding-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
 .resumen {
   background-color: white;
   box-shadow: 0px 2px 6px 0px;
@@ -151,4 +157,7 @@ nav ul li .active{
 }
 .checkboxElement{
   padding: 0 0 1rem 0rem;
+}
+.filters .selected{
+  background-color: papayawhip;
 }

@@ -3,7 +3,7 @@ export default function Quantity(props){
     const quantity = parseInt(props.formData[props.id]) + i;
     props.addProduct(
       {
-        type: "text",
+        type: "number",
         name: props.id,
         value: isNaN(quantity) ? 0 : quantity 
       }
