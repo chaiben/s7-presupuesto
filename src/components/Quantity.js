@@ -1,10 +1,11 @@
 export default function Quantity(props){
   function changeInput(i){
+    const quantity = parseInt(props.formData[props.id]) + i;
     props.addProduct(
       {
         type: "text",
         name: props.id,
-        value: parseInt(props.formData[props.id]) + i
+        value: isNaN(quantity) ? 0 : quantity 
       }
     )
   }
@@ -12,7 +13,7 @@ export default function Quantity(props){
     <div className="quantity">
     <button onClick={() => changeInput(1)}>+</button>
     <input
-        type="text"
+        type="number"
         onChange={(event) => props.addProduct(event.target)}
         id={props.id}
         name={props.id}

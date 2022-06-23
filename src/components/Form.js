@@ -9,21 +9,21 @@ export default function Form(props){
     formData={props.formData} 
     addProduct={props.addProduct} 
     id="paginaWeb" 
-    label="Una pàgina web (500 €)" />
+    label="Una página web (500 €)" />
     
     {props.formData["paginaWeb"]  && <Panel formData={props.formData} addProduct={props.addProduct} />}
 
     <Checkbox 
     formData={props.formData} 
     addProduct={props.addProduct} 
-    id="campaniaSeo" 
+    id="campaignSeo" 
     label="Una consultoria SEO (300 €)" />
 
     <Checkbox 
     formData={props.formData} 
     addProduct={props.addProduct} 
-    id="campaniaAds" 
-    label="Una campanya de Google Ads (200 €)" />
+    id="campaignAds" 
+    label="Una campaña de Google Ads (200 €)" />
   </Fragment>  
   );
 }
