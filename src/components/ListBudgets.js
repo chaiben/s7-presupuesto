@@ -4,6 +4,20 @@ export default function ListBudgets(props){
   function removeAll(){
     props.setList([]);
   }
+  function newBudget(){
+    props.setFormData({
+      webPage: false,
+      campaignSeo: false,
+      campaignAds: false,
+      numPages: 1,
+      numLanguages: 1,
+      presupuesto: "",
+      cliente: ""
+    })
+    props.setList(prevList => 
+      prevList.map(list => ({...list, selected:false}))
+    )
+  }
   return (
     <div>
       <div className="filters">
@@ -14,14 +28,19 @@ export default function ListBudgets(props){
         <button onClick={removeAll}>Limpiar</button>
       </div>
       <div className="resumenList">
+        <div className="newBudget" onClick={newBudget}> + </div>
         {
           props.list.map((presupuesto, index) => 
           <SummaryBudget 
-          key={`rp_${index}`}
-          index={index}
           data={presupuesto}
+          index={index}
+          key={`rp_${index}`}
           loadBudget={()=>props.loadBudget(index)}
-          selectedBudget={props.selectedBudget} />)
+          newBudget={newBudget}
+          selectedBudget={props.selectedBudget} 
+          setList={props.setList}
+          />
+          )
         }
       </div>
     </div>

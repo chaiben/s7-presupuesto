@@ -46,28 +46,39 @@ export default function App(){
   })
 
   function saveBudget(data){
-    setList(preList => {
-      const oldValues = preList.map(values => {
+    setList(prevList => {
+      var selectedIndex = false;
+      const oldValues = prevList.map((values, index) => {
+        if(values.selected === true)
+          selectedIndex = index;
         return {
           ...values,
           selected: false
         }
       });
-
-      return [
-        {
+      if(selectedIndex === false)
+        return [
+          {
+            ...data, 
+            date: new Date().toUTCString(),
+            selected: true
+          },
+          ...oldValues
+        ]
+      else{
+        prevList[selectedIndex] = {
           ...data, 
           date: new Date().toUTCString(),
           selected: true
-        },
-        ...oldValues
-      ]
+        }
+        return prevList;
+      }
+
     })
     sortBudget(sortType);
   }
 
   function loadBudget(index){
-    
     setFormData(() => ({
       webPage: list[index].webPage ,
       campaignSeo: list[index].campaignSeo ,
@@ -139,6 +150,7 @@ export default function App(){
           <ListBudgets 
           list={list} 
           loadBudget={loadBudget}
+          setFormData={setFormData}
           setList={setList}
           sortType={sortType}
           sortBudget={sortBudget}

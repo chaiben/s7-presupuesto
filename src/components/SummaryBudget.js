@@ -1,6 +1,15 @@
 export default function SummaryBudget(props){
-  function removeBudget(i){
-    console.log(i)
+  function removeBudget(e, i){
+    e.stopPropagation();
+    props.setList(prevList => {
+      const newList = [];
+      prevList.forEach((list, index) => {
+        if(i!==index)
+          newList.push({...list, selected:false})
+      });
+      return newList
+    });
+    props.newBudget();
   }
   return(
     <div 
@@ -9,7 +18,7 @@ export default function SummaryBudget(props){
     className={`resumen ${props.data.selected ? "selected" : ""}`}
     onClick={props.loadBudget}
     >
-      <div className="Delete" onClick={()=>removeBudget(props.index)}>X</div>
+      <div className="Delete" onClick={(e)=>removeBudget(e, props.index)}>X</div>
       <div><span>Nombre:</span> {props.data.presupuesto}</div>
       <div><span>Cliente:</span> {props.data.cliente}</div>
       <div><span>Total:</span> {
