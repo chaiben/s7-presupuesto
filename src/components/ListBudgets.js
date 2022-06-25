@@ -25,12 +25,13 @@ export default function ListBudgets(props){
         <button className={props.sortType === "sortZA" ? "selected":""} onClick={()=>props.sortBudget("sortZA")}>Z-A</button>
         <button className={props.sortType === "sortDateNew" ? "selected":""} onClick={()=>props.sortBudget("sortDateNew")} >Fecha Recientes</button>
         <button className={props.sortType === "sortDateOld" ? "selected":""} onClick={()=>props.sortBudget("sortDateOld")}>Fecha Antiguas</button>
+        <input type="text" placeholder="Buscar" onChange={(e)=>props.setSearch(e.target.value)} value={props.search} />
         <button onClick={removeAll}>Limpiar</button>
       </div>
       <div className="resumenList">
         <div className="newBudget" onClick={newBudget}> + </div>
         {
-          props.list.map((presupuesto, index) => 
+          props.filteredList.map((presupuesto, index) => 
           <SummaryBudget 
           data={presupuesto}
           index={index}

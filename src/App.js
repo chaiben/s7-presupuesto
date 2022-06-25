@@ -15,8 +15,20 @@ export default function App(){
     }
   })
 
+  const [search, setSearch] = useState(() => {
+    const initialValue = [];
+
+    try {
+      const item = localStorage.getItem("search");
+      return item ? JSON.parse(item) : initialValue;
+    } catch (error) {
+      return initialValue;
+    }
+  })
+
   const [formData, setFormData] = useState(() => {
     const initialValue = {
+      id: 0,
       webPage: false,
       campaignSeo: false,
       campaignAds: false,
@@ -80,19 +92,19 @@ export default function App(){
 
   function loadBudget(index){
     setFormData(() => ({
-      webPage: list[index].webPage ,
-      campaignSeo: list[index].campaignSeo ,
-      campaignAds: list[index].campaignAds ,
-      numPages: list[index].numPages ,
-      numLanguages: list[index].numLanguages ,
-      presupuesto: list[index].presupuesto ,
-      cliente: list[index].cliente 
+      webPage: filteredList[index].webPage ,
+      campaignSeo: filteredList[index].campaignSeo ,
+      campaignAds: filteredList[index].campaignAds ,
+      numPages: filteredList[index].numPages ,
+      numLanguages: filteredList[index].numLanguages ,
+      presupuesto: filteredList[index].presupuesto ,
+      cliente: filteredList[index].cliente 
     }));
 
     setList(prevList => (
       prevList.map((values,i) => ({
         ...values,
-        selected: index === i ? true : false
+        selected: values === filteredList[index] ? true : false
       }))
     ))
   }
@@ -130,12 +142,20 @@ export default function App(){
     }
     );
   }
+  function createFilteredList(){
+    return list.filter((value) => 
+      value.presupuesto.toUpperCase().search(search.toUpperCase()) !== -1
+    )
+  }
+
+  let filteredList = createFilteredList();
 
   useEffect(()=>{
-    localStorage.setItem("sortType", JSON.stringify(sortType));
-    localStorage.setItem("list", JSON.stringify(list));
     localStorage.setItem("formData", JSON.stringify(formData));
-  }, [sortType, list, formData]);
+    localStorage.setItem("list", JSON.stringify(list));
+    localStorage.setItem("search", JSON.stringify(search));
+    localStorage.setItem("sortType", JSON.stringify(sortType));
+  }, [search, sortType, list, formData]);
 
   return (
     <div className="flex">
@@ -148,12 +168,15 @@ export default function App(){
       {list.length > 0 && 
         <aside>
           <ListBudgets 
+          filteredList={filteredList}
           list={list} 
           loadBudget={loadBudget}
+          search={search}
           setFormData={setFormData}
           setList={setList}
-          sortType={sortType}
+          setSearch={setSearch}
           sortBudget={sortBudget}
+          sortType={sortType}
           />
         </aside>
       }

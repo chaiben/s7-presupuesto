@@ -16,7 +16,7 @@ export default function SummaryBudget(props){
     
     key={`resumen${props.id}`} 
     className={`resumen ${props.data.selected ? "selected" : ""}`}
-    onClick={props.loadBudget}
+    onClick={()=>props.loadBudget(props.index)}
     >
       <div className="Delete" onClick={(e)=>removeBudget(e, props.index)}>X</div>
       <div><span>Nombre:</span> {props.data.presupuesto}</div>
