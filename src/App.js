@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
-import ListaPresupuestos from "./components/ListaPresupuestos";
-import Presupuesto from "./components/Presupuesto";
+import ListBudgets from "./components/ListBudgets";
+import Budget from "./components/Budget";
 import "./style/style.css"
 
 export default function App(){
-  const [lista, setLista] = useState(() => {
+  const [list, setList] = useState(() => {
     const initialValue = [];
 
     try {
-      const item = localStorage.getItem("lista");
+      const item = localStorage.getItem("list");
       return item ? JSON.parse(item) : initialValue;
     } catch (error) {
       return initialValue;
@@ -45,29 +45,9 @@ export default function App(){
     }
   })
 
-  function addProduct(data){
-    const {type, name, value} = data;
-
-    if(
-      type === "number" && 
-      value && 
-      !value.toString().match(/^[0-9 ]+$/)
-      )
-      return;
-    
-    if(type === "number" && parseInt(value) < 0)
-      return;
-
-    setFormData(preFormData => ({
-      ...preFormData,
-      [name]: type === "checkbox" ? !preFormData[name] : value
-    })
-    )
-  }
-
   function saveBudget(data){
-    setLista(preLista => {
-      const oldValues = preLista.map(values => {
+    setList(preList => {
+      const oldValues = preList.map(values => {
         return {
           ...values,
           selected: false
@@ -83,123 +63,85 @@ export default function App(){
         ...oldValues
       ]
     })
-    sort(sortType);
+    sortBudget(sortType);
   }
 
   function loadBudget(index){
     
     setFormData(() => ({
-      paginaWeb: lista[index].paginaWeb ,
-      campaignSeo: lista[index].campaignSeo ,
-      campaignAds: lista[index].campaignAds ,
-      numPages: lista[index].numPages ,
-      numLanguages: lista[index].numLanguages ,
-      presupuesto: lista[index].presupuesto ,
-      cliente: lista[index].cliente 
+      paginaWeb: list[index].paginaWeb ,
+      campaignSeo: list[index].campaignSeo ,
+      campaignAds: list[index].campaignAds ,
+      numPages: list[index].numPages ,
+      numLanguages: list[index].numLanguages ,
+      presupuesto: list[index].presupuesto ,
+      cliente: list[index].cliente 
     }));
 
-    setLista(prevLista => (
-      prevLista.map((values,i) => ({
+    setList(prevList => (
+      prevList.map((values,i) => ({
         ...values,
         selected: index === i ? true : false
       }))
     ))
   }
-  function sort(type){
+  function sortBudget(type){
     setSortType(type);
     switch (type) {
       case "sortAZ":
-        sortAZ();
+        sortList("presupuesto", "asc");
         break;
       case "sortZA":
-        sortZA();
+        sortList("presupuesto", "desc");
         break;
       case "sortDateNew":
-        sortDateNew();
+        sortList("date", "desc");
         break;
       case "sortDateOld":
-        sortDateOld();
+        sortList("presupuesto", "asc");
         break;
     
       default:
-        sortDateNew();
+        sortList("date", "desc");
         break;
     }
   }
-  function sortAZ(){
-    setLista(preLista => {
-      const newArray = [...preLista];
+  function sortList(field, order){
+    setList(preList => {
+      const newArray = [...preList];
       newArray.sort(function(a,b){
-        if(a.presupuesto > b.presupuesto)
-          return 1;
-          else
-          return -1;
+        if(order === "desc")
+          return a[field] < b[field] ? 1 : -1;
+        else
+          return a[field] > b[field] ? 1 : -1;
       })
       return newArray;
     }
     );
   }
-  function sortZA(){
-    setLista(preLista => {
-      const newArray = [...preLista];
-      newArray.sort(function(a,b){
-        if(a.presupuesto < b.presupuesto)
-          return 1;
-          else
-          return -1;
-      })
-      return newArray;
-    }
-    );
-  }
-  function sortDateNew(){
-    setLista(preLista => {
-      const newArray = [...preLista];
-      newArray.sort(function(a,b){
-        if(a.date < b.date)
-          return 1;
-          else
-          return -1;
-      })
-      return newArray;
-    }
-    );
-  }
-  function sortDateOld(){
-    setLista(preLista => {
-      const newArray = [...preLista];
-      newArray.sort(function(a,b){
-        if(a.date > b.date)
-          return 1;
-          else
-          return -1;
-      })
-      return newArray;
-    }
-    );
-  }
+
   useEffect(()=>{
-    localStorage.setItem("lista", JSON.stringify(sortType));
-    localStorage.setItem("lista", JSON.stringify(lista));
+    localStorage.setItem("list", JSON.stringify(sortType));
+    localStorage.setItem("list", JSON.stringify(list));
     localStorage.setItem("formData", JSON.stringify(formData));
-  }, [sortType, lista, formData]);
+  }, [sortType, list, formData]);
 
   return (
     <div className="flex">
       <section>
-        <Presupuesto 
+        <Budget 
         formData={formData} 
-        addProduct={addProduct} 
+        setFormData={setFormData}
         saveBudget={saveBudget} />
       </section>
-      {lista.length > 0 && 
+      {list.length > 0 && 
         <aside>
-          <ListaPresupuestos 
-          lista={lista} 
+          <ListBudgets 
+          list={list} 
           loadBudget={loadBudget}
-          setLista={setLista}
+          setList={setList}
           sortType={sortType}
-          sort={sort}
+          sortBudget={sortBudget}
           />
         </aside>
       }

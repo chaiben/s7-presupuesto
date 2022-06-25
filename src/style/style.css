@@ -24,16 +24,25 @@ aside {
   justify-content: flex-start;
   padding: 1rem 1.5rem;
 }
-.resumenLista{
+.resumenList{
   padding-top: 1rem;
   display: flex;
   flex-wrap: wrap;
   gap: 0.8rem;
 }
 .resumen {
+  position: relative;
   background-color: white;
   box-shadow: 0px 2px 6px 0px;
   padding: 0.5rem;
+}
+.Delete {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 1px solid #000 !important;
+  padding: 2px 4px !important;
+  cursor: pointer;
 }
 .resumen.selected{
   background-color: lightblue;
@@ -157,6 +166,10 @@ nav ul li .active{
 }
 .checkboxElement{
   padding: 0 0 1rem 0rem;
+}
+.filters{
+  display: flex;
+  gap: 0.3rem;
 }
 .filters .selected{
   background-color: papayawhip;
