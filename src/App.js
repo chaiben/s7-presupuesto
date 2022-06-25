@@ -17,7 +17,7 @@ export default function App(){
 
   const [formData, setFormData] = useState(() => {
     const initialValue = {
-      paginaWeb: false,
+      webPage: false,
       campaignSeo: false,
       campaignAds: false,
       numPages: 1,
@@ -69,7 +69,7 @@ export default function App(){
   function loadBudget(index){
     
     setFormData(() => ({
-      paginaWeb: list[index].paginaWeb ,
+      webPage: list[index].webPage ,
       campaignSeo: list[index].campaignSeo ,
       campaignAds: list[index].campaignAds ,
       numPages: list[index].numPages ,
@@ -98,7 +98,7 @@ export default function App(){
         sortList("date", "desc");
         break;
       case "sortDateOld":
-        sortList("presupuesto", "asc");
+        sortList("date", "asc");
         break;
     
       default:
@@ -121,7 +121,7 @@ export default function App(){
   }
 
   useEffect(()=>{
-    localStorage.setItem("list", JSON.stringify(sortType));
+    localStorage.setItem("sortType", JSON.stringify(sortType));
     localStorage.setItem("list", JSON.stringify(list));
     localStorage.setItem("formData", JSON.stringify(formData));
   }, [sortType, list, formData]);

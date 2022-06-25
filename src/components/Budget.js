@@ -23,7 +23,7 @@ export default function Budget(props) {
     )
   }
   const totalPrice = 
-  (props.formData.paginaWeb ? 
+  (props.formData.webPage ? 
     500 + props.formData.numLanguages * props.formData.numPages * 30 : 
     0
   ) +

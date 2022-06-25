@@ -8,10 +8,10 @@ export default function Form(props){
     <Checkbox 
     formData={props.formData} 
     addProduct={props.addProduct} 
-    id="paginaWeb" 
+    id="webPage" 
     label="Una página web (500 €)" />
     
-    {props.formData["paginaWeb"]  && <Panel formData={props.formData} addProduct={props.addProduct} />}
+    {props.formData["webPage"]  && <Panel formData={props.formData} addProduct={props.addProduct} />}
 
     <Checkbox 
     formData={props.formData} 
