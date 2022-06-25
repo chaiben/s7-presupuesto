@@ -5,7 +5,7 @@ export default function Nav(){
     <nav>
       <ul>
         <li><NavLink to="/">Inicio</NavLink></li>
-        <li><NavLink to="/presupuestos">Solicitar Budget</NavLink></li>
+        <li><NavLink to="/presupuestos">Presupuesto Pagina Web</NavLink></li>
       </ul>
     </nav>
   );

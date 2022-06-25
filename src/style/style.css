@@ -43,6 +43,7 @@ aside {
   border: 1px solid #000 !important;
   padding: 2px 4px !important;
   cursor: pointer;
+  background-color: white;
 }
 .resumen.selected{
   background-color: lightblue;
