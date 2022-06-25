@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import ListBudgets from "./components/ListBudgets";
 import Budget from "./components/Budget";
 import "./style/style.css"
+import {useSearchParams} from "react-router-dom";
 
 export default function App(){
+
   const [list, setList] = useState(() => {
     const initialValue = [];
 
@@ -26,24 +28,19 @@ export default function App(){
     }
   })
 
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const [formData, setFormData] = useState(() => {
     const initialValue = {
-      id: 0,
-      webPage: false,
-      campaignSeo: false,
-      campaignAds: false,
-      numPages: 1,
-      numLanguages: 1,
-      presupuesto: "",
-      cliente: ""
+      webPage: searchParams.get("webPage") === "true" ? true : false,
+      campaignSeo: searchParams.get("campaignSeo") === "true" ? true : false,
+      campaignAds: searchParams.get("campaignAds") === "true" ? true : false,
+      numPages: searchParams.get("numPages") ? searchParams.get("numPages") : 1,
+      numLanguages: searchParams.get("numLanguages") ? searchParams.get("numLanguages") : 1,
+      presupuesto: searchParams.get("presupuesto") ? searchParams.get("presupuesto") : "",
+      cliente: searchParams.get("cliente") ? searchParams.get("cliente") : ""
     }
-
-    try {
-      const item = localStorage.getItem("formData");
-      return item ? JSON.parse(item) : initialValue;
-    } catch (error) {
-      return initialValue;
-    }
+    return initialValue;
   })
 
   const [sortType, setSortType] = useState(() => {
@@ -148,11 +145,14 @@ export default function App(){
   )
 
   useEffect(()=>{
-    localStorage.setItem("formData", JSON.stringify(formData));
     localStorage.setItem("list", JSON.stringify(list));
     localStorage.setItem("search", JSON.stringify(search));
     localStorage.setItem("sortType", JSON.stringify(sortType));
-  }, [search, sortType, list, formData]);
+  }, [search, sortType, list]);
+
+  useEffect(()=>{
+    setSearchParams(formData);
+  }, [setSearchParams, formData]);
 
   return (
     <div className="flex">
