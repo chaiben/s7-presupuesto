@@ -142,13 +142,10 @@ export default function App(){
     }
     );
   }
-  function createFilteredList(){
-    return list.filter((value) => 
-      value.presupuesto.toUpperCase().search(search.toUpperCase()) !== -1
-    )
-  }
 
-  let filteredList = createFilteredList();
+  const filteredList = list.filter(
+    (value) => value.presupuesto.toUpperCase().search(search.toUpperCase()) !== -1
+  )
 
   useEffect(()=>{
     localStorage.setItem("formData", JSON.stringify(formData));
