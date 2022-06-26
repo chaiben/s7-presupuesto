@@ -40,7 +40,16 @@ export default function App(){
       presupuesto: searchParams.get("presupuesto") ? searchParams.get("presupuesto") : "",
       cliente: searchParams.get("cliente") ? searchParams.get("cliente") : ""
     }
-    return initialValue;
+
+    if(searchParams.get("webPage"))
+      return initialValue;
+
+    try {
+      const item = localStorage.getItem("formData");
+      return item ? JSON.parse(item) : initialValue;
+    } catch (error) {
+      return initialValue;
+    }
   })
 
   const [sortType, setSortType] = useState(() => {
@@ -145,10 +154,11 @@ export default function App(){
   )
 
   useEffect(()=>{
+    localStorage.setItem("formData", JSON.stringify(formData));
     localStorage.setItem("list", JSON.stringify(list));
     localStorage.setItem("search", JSON.stringify(search));
     localStorage.setItem("sortType", JSON.stringify(sortType));
-  }, [search, sortType, list]);
+  }, [formData, search, sortType, list]);
 
   useEffect(()=>{
     setSearchParams(formData);
