@@ -36,7 +36,7 @@ export default function Nav(){
     <NavBox>
       <ul>
         <li><NavLink to="/">Inicio</NavLink></li>
-        <li><NavLink to="/presupuestos">Presupuesto Pagina Web</NavLink></li>
+        <li><NavLink to="/presupuestos">Presupuestos</NavLink></li>
       </ul>
     </NavBox>
   );
