@@ -4,7 +4,21 @@ import Budget from "./components/Budget";
 import "./style/style.css"
 import {useSearchParams} from "react-router-dom";
 
+function validPositiveNumbers(value){
+  if(
+    value && 
+    !value.toString().match(/^[0-9 ]+$/)
+    )
+    return "";
+  
+  if(parseInt(value) < 0)
+    return "";
+  
+    return parseInt(value);
+}
+
 export default function App(){
+
 
   const [list, setList] = useState(() => {
     const initialValue = [];
@@ -35,8 +49,8 @@ export default function App(){
       webPage: searchParams.get("webPage") === "true" ? true : false,
       campaignSeo: searchParams.get("campaignSeo") === "true" ? true : false,
       campaignAds: searchParams.get("campaignAds") === "true" ? true : false,
-      numPages: searchParams.get("numPages") ? searchParams.get("numPages") : 1,
-      numLanguages: searchParams.get("numLanguages") ? searchParams.get("numLanguages") : 1,
+      numPages: searchParams.get("numPages") ? validPositiveNumbers(searchParams.get("numPages")) : 1,
+      numLanguages: searchParams.get("numLanguages") ? validPositiveNumbers(searchParams.get("numLanguages")) : 1,
       presupuesto: searchParams.get("presupuesto") ? searchParams.get("presupuesto") : "",
       cliente: searchParams.get("cliente") ? searchParams.get("cliente") : ""
     }
