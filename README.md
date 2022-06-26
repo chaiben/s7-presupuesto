@@ -16,3 +16,5 @@ React
 ## About the App
 
 In this exercise I had to create a budget app that allows users to choose what services to hire and save it.
+
+![](https://github.com/chaiben/s7-presupuesto/blob/master/src/assets/budget.jpg)
