@@ -10,6 +10,7 @@ const SummaryList = styled.div`
 const BudgetListMenu = styled.div`
   display: flex;
   gap: 0.3rem;
+  flex-wrap: wrap;
 `;
 const BudgetListBtn = styled.button`
   background-color: ${props => props.selected ? "papayawhip" : "none"};

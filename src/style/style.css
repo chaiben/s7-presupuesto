@@ -40,3 +40,16 @@ section{
 main{
   background-color: #e5edff;
 }
+
+@media only all and (max-width: 600px) {
+  .flex{
+    flex-direction: column;
+  }
+  aside {
+    border: none;
+    padding: 2rem 1rem;
+    justify-content: center;
+    background-color: #e5edff;
+  }
+
+}
