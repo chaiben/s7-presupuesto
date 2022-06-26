@@ -1,3 +1,33 @@
+import styled from 'styled-components';
+
+const SummaryBox = styled.div`
+position: relative;
+background-color: ${props => props.selected ? "lightblue": "white"};
+box-shadow: 0px 2px 6px 0px;
+padding: 0.5rem;
+&:hover{
+  cursor: pointer;
+}
+& div{
+  font-family: monospace;
+  font-size: 0.6rem;
+  border-bottom: 1px dotted #dddddd;
+  padding: 0.4rem 0;
+  & span{
+    width: 50px;
+    display: inline-block;
+  }
+}
+`;
+const DeleteBtn = styled.div`
+position: absolute;
+top: 0;
+right: 0;
+border: 1px solid #000 !important;
+padding: 2px 4px !important;
+cursor: pointer;
+background-color: white;
+`;
 export default function SummaryBudget(props){
   function removeBudget(e, i){
     e.stopPropagation();
@@ -12,13 +42,12 @@ export default function SummaryBudget(props){
     props.newBudget();
   }
   return(
-    <div 
-    
+    <SummaryBox  
     key={`resumen${props.id}`} 
-    className={`resumen ${props.data.selected ? "selected" : ""}`}
+    selected = {props.data.selected}
     onClick={()=>props.loadBudget(props.index)}
     >
-      <div className="Delete" onClick={(e)=>removeBudget(e, props.index)}>X</div>
+      <DeleteBtn onClick={(e)=>removeBudget(e, props.index)}>X</DeleteBtn>
       <div><span>Nombre:</span> {props.data.presupuesto}</div>
       <div><span>Cliente:</span> {props.data.cliente}</div>
       <div><span>Total:</span> {
@@ -35,6 +64,6 @@ export default function SummaryBudget(props){
         second: '2-digit',
       }
       )}</div>
-    </div>
+    </SummaryBox>
   );
 }

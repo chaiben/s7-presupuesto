@@ -1,9 +1,31 @@
 import SummaryBudget from "./SummaryBudget";
+import styled from 'styled-components';
+
+const SummaryList = styled.div`
+  padding-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+`;
+const BudgetListMenu = styled.div`
+  display: flex;
+  gap: 0.3rem;
+`;
+const BudgetListBtn = styled.button`
+  background-color: ${props => props.selected ? "papayawhip" : "none"};
+`;
+const NewBudget = styled.div`
+  font-size: 2rem;
+  padding: 3rem;
+  background-color: white;
+  box-shadow: 0px 2px 6px 0px;
+  cursor: pointer;
+`;
 
 export default function ListBudgets(props){
-  function removeAll(){
-    props.setList([]);
-  }
+  // function removeAll(){
+  //   props.setList([]);
+  // }
   function newBudget(){
     props.setFormData({
       webPage: false,
@@ -20,16 +42,16 @@ export default function ListBudgets(props){
   }
   return (
     <div>
-      <div className="filters">
-        <button className={props.sortType === "sortAZ" ? "selected":""} onClick={()=>props.sortBudget("sortAZ")}>A-Z</button>
-        <button className={props.sortType === "sortZA" ? "selected":""} onClick={()=>props.sortBudget("sortZA")}>Z-A</button>
-        <button className={props.sortType === "sortDateNew" ? "selected":""} onClick={()=>props.sortBudget("sortDateNew")} >Fecha Recientes</button>
-        <button className={props.sortType === "sortDateOld" ? "selected":""} onClick={()=>props.sortBudget("sortDateOld")}>Fecha Antiguas</button>
+      <BudgetListMenu>
+        <BudgetListBtn selected={props.sortType === "sortAZ"} onClick={()=>props.sortBudget("sortAZ")}>A-Z</BudgetListBtn>
+        <BudgetListBtn selected={props.sortType === "sortZA"} onClick={()=>props.sortBudget("sortZA")}>Z-A</BudgetListBtn>
+        <BudgetListBtn selected={props.sortType === "sortDateNew"} onClick={()=>props.sortBudget("sortDateNew")} >Fecha Recientes</BudgetListBtn>
+        <BudgetListBtn selected={props.sortType === "sortDateOld"} onClick={()=>props.sortBudget("sortDateOld")}>Fecha Antiguas</BudgetListBtn>
         <input type="text" placeholder="Buscar" onChange={(e)=>props.setSearch(e.target.value)} value={props.search} />
-        <button onClick={removeAll}>Limpiar</button>
-      </div>
-      <div className="resumenList">
-        <div className="newBudget" onClick={newBudget}> + </div>
+        {/* <button onClick={removeAll}>Limpiar</button> */}
+      </BudgetListMenu>
+      <SummaryList>
+        <NewBudget onClick={newBudget}> + </NewBudget>
         {
           props.filteredList.map((presupuesto, index) => 
           <SummaryBudget 
@@ -43,7 +65,7 @@ export default function ListBudgets(props){
           />
           )
         }
-      </div>
+      </SummaryList>
     </div>
   );
 }

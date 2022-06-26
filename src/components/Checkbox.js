@@ -1,6 +1,12 @@
+import styled from 'styled-components';
+
+const CheckboxElement = styled.div`
+  padding: 0 0 1rem 0rem;
+`;
+
 export default function Checkbox(props){
   return (
-  <div className="checkboxElement">
+  <CheckboxElement>
       <input 
       type="checkbox" 
       id={props.id} 
@@ -9,6 +15,6 @@ export default function Checkbox(props){
       onChange={(event)=>props.addProduct(event.target)}
     />
     <label htmlFor={props.id}>{props.label}</label>
-  </div>
+  </CheckboxElement>
   );
 }
