@@ -32,7 +32,7 @@ export default function App(){
   })
 
   const [search, setSearch] = useState(() => {
-    const initialValue = [];
+    const initialValue = "";
 
     try {
       const item = localStorage.getItem("search");
@@ -164,7 +164,7 @@ export default function App(){
   }
 
   const filteredList = list.filter(
-    (value) => value.presupuesto.toUpperCase().search(search.toUpperCase()) !== -1
+    (value) => value.presupuesto.toUpperCase().search(search.toString().toUpperCase()) !== -1
   )
 
   useEffect(()=>{
