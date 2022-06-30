@@ -1,6 +1,6 @@
 # IT Academy, Sprint 7: Budget App
 
-This is my second React app that I pratice using hooks, styled components and react-router-dom v6.
+This is my second React app in which I praticed using hooks, styled components and react-router-dom v6.
 
 ## What have I applied?
 
@@ -15,6 +15,6 @@ React
 
 ## About the App
 
-In this exercise I had to create a budget app that allows users to choose what services to hire and save it.
-
+In this exercise I had to create a budget app that allows users to choose what services to hire, calculate their budget and save it.
+ 
 ![](https://github.com/chaiben/s7-presupuesto/blob/master/src/assets/budget.jpg)
